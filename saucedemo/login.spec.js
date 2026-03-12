@@ -13,7 +13,7 @@ test ('login tests', async({page})=> {
     await page.getByPlaceholder('Password').fill(valid_pwd);
     await page.getByRole('button', {name : 'Login'}).click();
     await expect(page).toHaveURL(url + '/inventory.html');
-    await expect(page.getByText('Swag Labs')).toBeVisible;
+    await expect(page.getByText('Swag Labs')).toBeVisible();
 })
 
 test ('locked user', async({page}) => {
