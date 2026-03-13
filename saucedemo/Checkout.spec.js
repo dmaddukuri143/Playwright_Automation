@@ -5,11 +5,14 @@ const valid_pwd = 'secret_sauce';
 const First_Name = 'Jane';
 const Last_Name = 'Doe';
 const Zip_Code = '12345';
-test ('checkout', async({page})=> {
+test.describe ('login', ()=>{
+test.beforeEach(async({page})=> {
     await page.goto(url);
     await page.getByPlaceholder('Username').fill(valid_login);
     await page.getByPlaceholder('Password').fill(valid_pwd);
     await page.getByRole('button', {name: 'Login'}).click();
+})
+test('checkout', async({page})=> {
     await expect(page.getByText('Products')).toBeVisible();
     await expect(page.getByText('Swag labs')).toBeVisible();
     await page.locator('[data-test= "add-to-cart-sauce-labs-backpack"]').click();
@@ -22,9 +25,5 @@ test ('checkout', async({page})=> {
     await page.getByRole('button',{name: 'Continue'}).click();
     await page.getByRole('button', {name: 'Finish'}).click();
     await expect(page.getByText('Thank you for your order!')).toBeVisible();
-
-
-
-
-
+})
 })

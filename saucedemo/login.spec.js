@@ -7,8 +7,12 @@ const locked_pwd = 'secret_sauce';
 const invalid_pwd = 'password123';
 
 
-test ('login tests', async({page})=> {
+test.describe('login', ()=> {
+ test.beforeEach(async({page})=> {
     await page.goto(url);
+
+ })
+ test('Valid user', async({page})=> {
     await page.getByPlaceholder('Username').fill(valid_login);
     await page.getByPlaceholder('Password').fill(valid_pwd);
     await page.getByRole('button', {name : 'Login'}).click();
@@ -17,7 +21,6 @@ test ('login tests', async({page})=> {
 })
 
 test ('locked user', async({page}) => {
-    await page.goto(url);
     await page.getByPlaceholder('Username').fill(locked_user);
     await page.getByPlaceholder('Password').fill(locked_pwd);
     await page.getByRole('button', {name: 'Login'}).click();
@@ -25,9 +28,9 @@ test ('locked user', async({page}) => {
 }) 
 
 test ('invalid pwd', async({page})=> {
-    await page.goto(url);
     await page.getByPlaceholder('Username').fill(valid_login);
     await page.getByPlaceholder('Password').fill(invalid_pwd);
     await page.getByRole('button', {name: 'Login'}).click();
     await expect(page.getByText('Epic sadface: Username and password do not match any user in this service')).toBeVisible();
+})
 })
